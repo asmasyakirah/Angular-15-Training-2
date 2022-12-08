@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { StockItemComponent } from './stock/stock-item/stock-item.component';
 import { CreateStockComponent } from './stock/create-stock/create-stock.component';
 import { StockListComponent } from './stock/stock-list/stock-list.component';
+import { StockService } from './service/stock.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { StockListComponent } from './stock/stock-list/stock-list.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    StockService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

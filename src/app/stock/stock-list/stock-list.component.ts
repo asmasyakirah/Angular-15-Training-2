@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Stock } from 'src/app/model/stock';
+import { StockService } from 'src/app/service/stock.service';
 
 @Component({
   selector: 'app-stock-list',
@@ -10,12 +11,13 @@ export class StockListComponent implements OnInit {
 
   public stocks!: Array<Stock>;
 
-  ngOnInit(): void {
-    this.stocks = [
-      new Stock('First Stock Company', 'TSC', 85, 80, 'NASDAQ'),
-      new Stock('Second Stock Company', 'TSC', 185, 80, 'NSE'),
-      new Stock('Third Stock Company', 'TSC', 85, 180, 'NYSE')
-    ]
+  constructor (private stockService:StockService)
+  {    
+  }
+
+  ngOnInit(): void 
+  {
+    this.stocks = this.stockService.getStock();
   }
 
   onToggleFavorite(stock: Stock) {
