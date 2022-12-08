@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Stock } from '../model/stock';
 import { NgModel } from '@angular/forms';
+import { Observable, throwError } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,9 @@ export class StockService {
     ]
   }
 
-  getStock():Stock[]
+  getStock():Observable<Stock[]>
   {
-    return this.stocks;
+    return observableOf(this.stocks);
   }
 
   createStock(stock:Stock)
@@ -27,7 +29,7 @@ export class StockService {
     let foundStock = this.stocks.find(each=>each.code===stock.code);
     if (foundStock)
     {
-      return false;
+      return throwError(false);
     }
     this.stocks.push(stock);
     return true;
