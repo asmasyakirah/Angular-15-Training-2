@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Stock } from 'src/app/model/stock';
 import { StockService } from 'src/app/service/stock.service';
 import { Observable, throwError } from 'rxjs';
@@ -9,8 +9,9 @@ import { of as observableOf } from 'rxjs';
   templateUrl: './stock-list.component.html',
   styleUrls: ['./stock-list.component.css']
 })
-export class StockListComponent implements OnInit {
+export class StockListComponent {
 
+  @Input() public stock!: Stock;
   public stocks$!: Observable<Stock[]>;
 
   constructor (private stockService:StockService)
@@ -22,10 +23,11 @@ export class StockListComponent implements OnInit {
     this.stocks$ = this.stockService.getStock();
   }
 
-  onToggleFavorite (stock: Stock) 
+  onToggleFavorite (event:any) 
   {
-    console.log('Favorite for stock ', stock, ' was triggered');
-    stock.favorite = !stock.favorite;
-    this.stockService.toggleFavorite(stock);
+    // console.log('Favorite for stock ', stock, ' was triggered');
+    // stock.favorite = !stock.favorite;
+    this.stockService.toggleFavorite(this.stock)
+    .subscribe((stock)=>this.stock.favorite=!this.stock.favorite);
   }
-}
+}  
