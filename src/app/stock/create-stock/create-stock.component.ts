@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Stock } from 'src/app/model/stock';
+import { MessageService } from 'src/app/service/message.service';
 import { StockService } from 'src/app/service/stock.service';
 
 @Component({
@@ -11,10 +12,10 @@ export class CreateStockComponent {
 
   public stock: Stock;
   public confirmed = false;
-  public message!:string;
   public exchanges = ['NYSE', 'NASDAQ', 'OTHER'];
-  constructor(private stockService: StockService) {
+  constructor(private stockService: StockService, public messageService:MessageService) {
     this.stock =  new Stock('test', '', 0, 0, 'NASDAQ');
+    this.messageService.message = "Component Level: Hello";
   }
 
   setStockPrice(price: number) {
@@ -32,11 +33,11 @@ export class CreateStockComponent {
       if(created)
       {
         console.log('Creating stock', this.stock);
-        this.message = "Successfully created stock with code "+this.stock.code;
+        this.messageService.message = "Successfully created stock with code "+this.stock.code;
       }
       else
       {
-        this.message = "Stock with code "+this.stock.code+" already exist";
+        this.messageService.message = "Stock with code "+this.stock.code+" already exist";
       }
     }
     else
